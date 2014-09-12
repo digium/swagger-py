@@ -64,7 +64,8 @@ class Operation(object):
 
             if value:
                 if param['paramType'] == 'path':
-                    uri = uri.replace('{%s}' % pname, str(value))
+                    uri = uri.replace('{%s}' % pname,
+                                      urllib.quote_plus(str(value)))
                 elif param['paramType'] == 'query':
                     params[pname] = value
                 else:
