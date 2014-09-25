@@ -62,7 +62,7 @@ class Operation(object):
             if isinstance(value, list):
                 value = ",".join(value)
 
-            if value:
+            if value is not None:
                 if param['paramType'] == 'path':
                     uri = uri.replace('{%s}' % pname, str(value))
                 elif param['paramType'] == 'query':
