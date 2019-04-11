@@ -17,6 +17,15 @@ from swaggerpy.processors import WebsocketProcessor, SwaggerProcessor
 
 log = logging.getLogger(__name__)
 
+try :
+    encode = urllib.urlencode
+except :
+    encode = urllib.parse.urlencode
+    
+try :
+    quote_plus = urllib.quote_plus
+except :
+    quote_plus = urllib.parse.quote_plus
 
 class ClientProcessor(SwaggerProcessor):
     """Enriches swagger models for client processing.
@@ -52,7 +61,7 @@ class Operation(object):
         :param kwargs: ARI operation arguments.
         :return: Implementation specific response or WebSocket connection
         """
-        log.info("%s?%r" % (self.json['nickname'], urllib.urlencode(kwargs)))
+        log.info("%s?%r" % (self.json['nickname'], encode(kwargs)))
         method = self.json['httpMethod']
         uri = self.uri
         params = {}
@@ -68,7 +77,7 @@ class Operation(object):
             if value is not None:
                 if param['paramType'] == 'path':
                     uri = uri.replace('{%s}' % pname,
-                                      urllib.quote_plus(str(value)))
+                                      quote_plus(str(value)))
                 elif param['paramType'] == 'query':
                     params[pname] = value
                 elif param['paramType'] == 'body':

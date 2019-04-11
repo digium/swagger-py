@@ -10,7 +10,10 @@
 import logging
 import requests
 import requests.auth
-import urlparse
+try :
+    import urlparse
+except :
+    import urllib.parse as urlparse
 import websocket
 
 log = logging.getLogger(__name__)
